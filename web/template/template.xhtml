@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <f:view encoding="ISO-8859-1" contentType="text/html">        
+    <h:head>
+        <title><ui:insert name="titulo">Titulo de pagina</ui:insert></title>
+        <h:outputStylesheet library="css" name="estilos.css"/>
+        <h:outputScript library="js" name="scripts.js"/>
+    </h:head>    
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" header="Sistema para controle de Livros"
+                style="text-align: center">                              
+            </p:layoutUnit>
+            <p:layoutUnit position="west" header="menu">
+                <h:form id="menu">
+                    <p:menu>
+                        <p:submenu label="Cadastros">
+                            <p:menuitem action="#{controleLivraria.listar()}"
+                                        value="Livrarias"
+                                        ajax="false"/>
+                            <p:menuitem action="#{controleCatalogo.listar()}"
+                                        value="Catalogos"
+                                        ajax="false"/>
+                            <p:menuitem action="#{controleAutor.listar()}"
+                                        value="Autores"
+                                        ajax="false"/>
+                            <p:menuitem action="#{controleLivro.listar()}"
+                                        value="Livros"
+                                        ajax="false"/>                            
+                            <p:menuitem action="#{controleIdioma.listar()}"
+                                        value="Idiomas"
+                                        ajax="false"/>
+                            <p:menuitem action="#{controleFormato.listar()}"
+                                        value="Formatos"
+                                        ajax="false"/>                            
+                        </p:submenu>
+                    </p:menu>
+                </h:form>                
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                <ui:insert name="conteudo">
+                    
+                </ui:insert>
+            </p:layoutUnit>
+            <ui:insert name="dialogos">
+                
+            </ui:insert>
+            <p:layoutUnit position="south">
+                <ui:include src="/template/ajaxstatus.xhtml"/>
+                <div align="center">Direitos Reservados</div>
+            </p:layoutUnit>
+        </p:layout>
+
+    </f:view>
+</html>
+
