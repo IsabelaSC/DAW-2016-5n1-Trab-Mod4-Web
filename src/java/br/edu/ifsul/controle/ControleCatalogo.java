@@ -12,7 +12,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 /**
- *Isabela
+ * 
+ * @author Isabela
  */
 @ManagedBean(name = "controleCatalogo")
 @ViewScoped

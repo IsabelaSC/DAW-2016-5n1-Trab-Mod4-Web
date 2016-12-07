@@ -6,9 +6,7 @@ import javax.faces.context.FacesContext;
 
 /**
  *
- * @author Prof. Me. Jorge Luis Boeira Bavaresco
- * @email jorge.bavaresco@passofundo.ifsul.edu.br
- * @organization IFSUL - Campus Passo Fundo
+ * @author Isabela
  */
 public class UtilMensagens {
 

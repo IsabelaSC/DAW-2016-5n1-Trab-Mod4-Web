@@ -1,4 +1,3 @@
-
 package br.edu.ifsul.dao;
 
 import br.edu.ifsul.modelo.Catalogo;
@@ -12,6 +11,5 @@ public class CatalogoDAO<T> extends DAOGenerico<Catalogo> implements Serializabl
     public CatalogoDAO(){
         super();
         super.setClassePersistente(Catalogo.class);
-    }
-    
+    }    
 }

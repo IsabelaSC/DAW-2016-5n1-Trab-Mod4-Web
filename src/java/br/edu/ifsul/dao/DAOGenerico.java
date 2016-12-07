@@ -7,10 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 
 /**
- *
- * @author Prof. Me. Jorge Luis Boeira Bavaresco
- * @email jorge.bavaresco@passofundo.ifsul.edu.br
- * @organization IFSUL - Campus Passo Fundo
+ * @author Isabela
  */
 public class DAOGenerico<T> implements Serializable {
 

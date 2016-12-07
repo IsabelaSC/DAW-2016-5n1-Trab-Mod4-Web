@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="titulo">Manutenção de Idiomas</ui:define>
+        <ui:define name="conteudo">
+            <h:form>
+                <p:messages/>
+                <p:growl id="growl"/>
+                <p:commandButton value="Novo" action="#{controleIdioma.novo()}" ajax="false"/>
+                <div align="center">
+                    <p:panelGrid columns="11">
+                        <p:outputLabel value="Ordem:"/>
+                        <p:selectOneMenu value="#{controleIdioma.dao.ordem}">
+                            <f:selectItem itemLabel="ID" itemValue="id"/>
+                            <f:selectItem itemLabel="Nome" itemValue="nome"/>
+                            <p:ajax update="listagem"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Filtro:"/>
+                        <p:inputText value="#{controleIdioma.dao.filtro}">
+                            <p:ajax event="blur" update="listagem growl"/>
+                        </p:inputText>
+                        <p:commandButton value="Filtrar" update="listagem growl"/>
+                        <p:outputLabel value="Máximo de objetos:"/>
+                        <p:inputText value="#{controleIdioma.dao.maximoObjetos}" size="3">
+                            <p:ajax event="keyup" update="listagem"/>
+                        </p:inputText>
+                        <p:commandButton value="Primeiro" actionListener="#{controleIdioma.dao.primeiro()}"
+                                         update="listagem"/>
+                        <p:commandButton value="Anterior" actionListener="#{controleIdioma.dao.anterior()}"
+                                         update="listagem"/>                        
+                        <p:commandButton value="Proximo" actionListener="#{controleIdioma.dao.proximo()}"
+                                         update="listagem"/>                        
+                        <p:commandButton value="Ultimo" actionListener="#{controleIdioma.dao.ultimo()}"
+                                         update="listagem"/>                        
+                    </p:panelGrid>
+                </div>
+                <p:dataTable value="#{controleIdioma.dao.listaObjetos}" var="obj"
+                             id="listagem">
+                    <f:facet name="footer">
+                        <div align="center">
+                            <p:outputLabel value="#{controleIdioma.dao.mensagemNavegacao}"/>
+                        </div>
+                    </f:facet>
+                    <p:column headerText="ID">
+                        <p:outputLabel value="#{obj.id}"/>
+                    </p:column>
+                    <p:column headerText="Nome">                        
+                        <p:outputLabel value="#{obj.nome}"/>
+                    </p:column>
+                    <p:column headerText="Sigla">                        
+                        <p:outputLabel value="#{obj.sigla}"/>
+                    </p:column>                     
+                    <p:column headerText="Alterar">
+                        <p:commandLink value="Alterar" 
+                                       action="#{controleIdioma.editar(obj.id)}" ajax="false"/>
+                    </p:column>    
+                    <p:column headerText="Remover">
+                        <p:commandLink value="Remover" 
+                                       action="#{controleIdioma.remover(obj.id)}"
+                                       onclick="if (!confirm('Confirma a exclusão'))
+                                           return false" ajax="false"/>
+                    </p:column>                    
+                </p:dataTable>
+            </h:form>            
+        </ui:define>
+    </ui:composition>    
+</html>
+

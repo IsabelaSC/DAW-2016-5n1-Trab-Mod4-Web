@@ -1,6 +1,7 @@
 package br.edu.ifsul.controle;
 
 import br.edu.ifsul.dao.LivrariaDAO;
+import br.edu.ifsul.modelo.Catalogo;
 import br.edu.ifsul.modelo.Livraria;
 import br.edu.ifsul.util.Util;
 import br.edu.ifsul.util.UtilMensagens;
@@ -9,30 +10,61 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 /**
- *Isabela
+ *
+ * @author Isabela
  */
 @ManagedBean(name = "controleLivraria")
 @SessionScoped
 public class ControleLivraria implements Serializable {
 
-    private LivrariaDAO dao;
+    private LivrariaDAO<Livraria> dao;
     private Livraria objeto;
-    
-    public ControleLivraria(){
-        dao = new LivrariaDAO();
+    private Catalogo catalogo;
+    private Boolean novoCatalogo;
+
+    public ControleLivraria() {
+        dao = new LivrariaDAO<>();
     }
-    
-    public String listar(){
+
+    public void novoCatalogo() {
+        catalogo = new Catalogo();
+        novoCatalogo = true;
+    }
+
+    public void alterarCatalogo(int index) {
+        catalogo = objeto.getCatalogos().get(index);
+        novoCatalogo = false;
+    }
+
+    public void salvarCatalogo() {
+        if (novoCatalogo) {
+            objeto.adicionarCatalogo(catalogo);
+        }
+        UtilMensagens.mensagemInformacao("Catalogo adicionado com sucesso");
+    }
+
+    public void removerCatalogo(int index) {
+        objeto.removerCatalogo(index);
+        UtilMensagens.mensagemInformacao("Catalogo removido com sucesso");
+    }
+
+    public String listar() {
         return "/privado/livraria/listar?faces-redirect=true";
     }
-    
-    public String novo(){
+
+    public String novo() {
         objeto = new Livraria();
         return "formulario";
     }
-    
-    public String salvar(){
-        if(dao.salvar(objeto)){
+
+    public String salvar() {
+        boolean persistiu;
+        if (objeto.getId() == null) {
+            persistiu = dao.persist(objeto);
+        } else {
+            persistiu = dao.merge(objeto);
+        }
+        if (persistiu) {
             UtilMensagens.mensagemInformacao(dao.getMensagem());
             return "listar";
         } else {
@@ -40,24 +72,24 @@ public class ControleLivraria implements Serializable {
             return "formulario";
         }
     }
-    
-    public String cancelar(){
+
+    public String cancelar() {
         return "listar";
     }
-    
-    public String editar(Integer id){
+
+    public String editar(Integer id) {
         try {
             objeto = dao.localizar(id);
             return "formulario";
-        } catch (Exception e){
-            UtilMensagens.mensagemErro("Erro ao recuperar objeto: "+Util.getMensagemErro(e));
+        } catch (Exception e) {
+            UtilMensagens.mensagemErro("Erro ao recuperar objeto: " + Util.getMensagemErro(e));
             return "listar";
         }
     }
-    
-    public void remover(Integer id){
+
+    public void remover(Integer id) {
         objeto = dao.localizar(id);
-        if (dao.remover(objeto)){
+        if (dao.remover(objeto)) {
             UtilMensagens.mensagemInformacao(dao.getMensagem());
         } else {
             UtilMensagens.mensagemErro(dao.getMensagem());
@@ -79,5 +111,21 @@ public class ControleLivraria implements Serializable {
     public void setObjeto(Livraria objeto) {
         this.objeto = objeto;
     }
-    
+
+    public Catalogo getCatalogo() {
+        return catalogo;
+    }
+
+    public void setCatalogo(Catalogo catalogo) {
+        this.catalogo = catalogo;
+    }
+
+    public Boolean getNovoCatalogo() {
+        return novoCatalogo;
+    }
+
+    public void setNovoCatalogo(Boolean novoCatalogo) {
+        this.novoCatalogo = novoCatalogo;
+    }
+
 }
