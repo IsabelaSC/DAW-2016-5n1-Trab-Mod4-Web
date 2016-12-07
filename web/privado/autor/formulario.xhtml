@@ -29,8 +29,8 @@
                     <p:outputLabel value="Nome" for="txtNome"/>
                     <p:inputText id="txtNome" size="40" maxlength="40"
                                  value="#{controleAutor.objeto.nome}" placeholder="Obrigatório"/>
-                    <p:outputLabel value="Bibliografia" for="txtBibliografia"/>
-                    <p:inputText id="txtBibliografia" value="#{controleAutor.objeto.bibliografia}" />                    
+                    <p:outputLabel value="Bibliografia" for="edtBibliografia"/>
+                    <p:editor id="edtBibliografia" value="#{controleAutor.objeto.bibliografia}" width="500" height="150"/>                    
                 </p:panelGrid>
             </h:form>
         </ui:define>

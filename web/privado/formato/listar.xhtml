@@ -11,7 +11,10 @@
             <h:form>
                 <p:messages/>
                 <p:growl id="growl"/>
-                <p:commandButton value="Novo" action="#{controleFormato.novo()}" ajax="false"/>
+                <p:commandButton value="Novo" action="#{controleFormato.novo()}" ajax="false"
+                                 update=":formEdicao"
+                                 process="@form"
+                                 oncomplete="PF('dlg').show();"                                 />
                 <div align="center">
                     <p:panelGrid columns="11">
                         <p:outputLabel value="Ordem:"/>

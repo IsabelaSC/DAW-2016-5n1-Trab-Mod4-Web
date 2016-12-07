@@ -6,9 +6,7 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <ui:composition template="/template/template.xhtml">
-        <ui:define name="titulo">
-            Manutenção de Livrarias
-        </ui:define>
+        <ui:define name="titulo">Manutenção de Livrarias</ui:define>
         <ui:define name="conteudo">
             <h:form id="formListagem" prependId="false">
                 <p:growl/>
@@ -17,8 +15,37 @@
                                  update=":formEdicao"
                                  process="@form"
                                  oncomplete="PF('dlg').show();"/>
+                <div align="center">
+                    <p:panelGrid columns="11">
+                        <p:outputLabel value="Ordem:"/>
+                        <p:selectOneMenu id="ordem" value="#{controleLivraria.dao.ordem}">
+                            <f:selectItem itemLabel="ID" itemValue="id"/>
+                            <f:selectItem itemLabel="Nome" itemValue="nome"/>
+                            <p:ajax update="listagem"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Filtro:"/>
+                        <p:inputText value="#{controleLivraria.dao.filtro}" size="15"
+                                     placeholder="Filtro">
+                            <p:ajax update="listagem" event="keyup" />
+                        </p:inputText>                            
+                        <p:commandButton value="Filtrar" update="listagem"/>
+                        <p:outputLabel value="Máximo de objetos: "/>
+                        <p:inputNumber value="#{controleLivraria.dao.maximoObjetos}"
+                                       decimalPlaces="0" decimalSeparator="" size="4"
+                                       thousandSeparator=""/>                                                    
+                        <p:commandButton action="#{controleLivraria.dao.primeiro()}"
+                                         icon="ui-icon-seek-first" title="Primeiro" update="listagem"/>
+                        <p:commandButton action="#{controleLivraria.dao.anterior()}"
+                                         icon="ui-icon-seek-prev" title="Anterior" update="listagem"/>
+                        <p:commandButton action="#{controleLivraria.dao.proximo()}"
+                                         icon="ui-icon-seek-next" title="Próximo" update="listagem"/>
+                        <p:commandButton action="#{controleLivraria.dao.ultimo()}"
+                                         icon="ui-icon-seek-end" title="Ultimo" update="listagem"/>                        
+                    </p:panelGrid>
+                </div>                
+                
                 <p:dataTable value="#{controleLivraria.dao.listaObjetos}"
-                             var="obj">
+                             var="obj" id="listagem">
                     <f:facet name="footer">
                         <div align="center">                            
                         </div>
